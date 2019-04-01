@@ -4,7 +4,7 @@ from decrypt import decrypt_symmetric
 from storage import download_file
 
 
-def event_handler(payload={'status': 'test'}):
+def event_handler(payload):
 
     file_str = download_file(
         bucket_name='crypto-manager-keys',
@@ -20,7 +20,7 @@ def event_handler(payload={'status': 'test'}):
         'ciphertext': bytes(file_str)
     })
 
-    if payload['status'] == 'live':
+    if payload['action'] == 'live':
         App = CoinbasePro(sandbox_mode=False, creds=credentials['live'])
         App.deposit(50)
     else:
@@ -29,4 +29,4 @@ def event_handler(payload={'status': 'test'}):
 
 
 if __name__ == "__main__":
-    print(event_handler())
+    print(event_handler({'action': 'test'}))

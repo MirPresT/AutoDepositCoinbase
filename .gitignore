@@ -82,10 +82,14 @@ celerybeat-schedule
 *.sage.py
 
 # Editor
-.vscode/*
+.vscode
+
+
+# Coogle Cloud Platform:
+crypto-manager-235417-bc2608491309_compute.json
 
 # Environments
-.env
+*.env
 .venv
 env/
 venv/

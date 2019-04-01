@@ -9,6 +9,5 @@ def download_file(
 
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket_name)
-    print(dir(bucket))
     blob = bucket.blob(source_blob_name)
     return blob.download_as_string()
