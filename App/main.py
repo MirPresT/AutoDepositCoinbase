@@ -4,7 +4,7 @@ from decrypt import decrypt_symmetric
 from storage import download_file
 
 
-def event_handler(payload):
+def event_handler(payload, context):
 
     file_str = download_file(
         bucket_name='crypto-manager-keys',
