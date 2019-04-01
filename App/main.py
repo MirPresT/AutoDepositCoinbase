@@ -22,7 +22,7 @@ def event_handler(payload, context):
 
     if payload['action'] == 'live':
         App = CoinbasePro(sandbox_mode=False, creds=credentials['live'])
-        App.deposit(50)
+        App.deposit(25)
     else:
         App = CoinbasePro(sandbox_mode=True, creds=credentials['sandbox'])
         return 'coinbase connected ok... no erros'
