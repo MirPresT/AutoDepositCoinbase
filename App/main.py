@@ -29,4 +29,4 @@ def event_handler(payload, context):
 
 
 if __name__ == "__main__":
-    print(event_handler({'action': 'test'}))
+    print(event_handler({'action': 'live'}, {}))

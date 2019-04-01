@@ -27,13 +27,18 @@ class CoinbasePro():
         df.set_index('currency', inplace=True)
         self.account_table = df
 
-    def deposit(self, USD):
-        params = {
-            'amount': USD,
-            'currency': 'USD',
-            'payment_method_id': self.account_table.loc['USD', 'id']
+    def deposit(self, usd_amount):
+        payment_methods = self.api_get('payment-methods', public=False).json()
+        bank_accounts = [a for a in payment_methods if a['type'] == 'ach_bank_account']
+
+        first_bank_acct = bank_accounts[0]
+
+        data = {
+            "currency": "USD",
+            "amount": float(usd_amount),
+            "payment_method_id": first_bank_acct['id']
         }
-        self.api_post('deposits/payment-method', params=params)
+        self.api_post('deposits/payment-method', data=data)
 
     def api_get(self, endpoint, public, params={}):
 
