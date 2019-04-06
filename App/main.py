@@ -1,18 +1,20 @@
 import json
+import base64
 from coinbase_pro import CoinbasePro
 from decrypt import decrypt_symmetric
 from storage import download_file
 
 
-def event_handler(payload, context):
-
-    print(payload)
+def event_handler(event, context):
 
     file_str = download_file(
         bucket_name='crypto-manager-keys',
         source_blob_name='coinbase_creds_encrypted.json',
         destination_file='encrypted_creds.json'
     )
+
+    decoded_data_str = base64.b64decode(context['data']).decode('utf-8')
+    data = json.loads(decoded_data_str)
 
     credentials = decrypt_symmetric(**{
         'project_id': 'crypto-manager-235417',
@@ -22,7 +24,7 @@ def event_handler(payload, context):
         'ciphertext': bytes(file_str)
     })
 
-    if payload['action'] == 'live':
+    if data['action'] == 'live':
         App = CoinbasePro(sandbox_mode=False, creds=credentials['live'])
         App.deposit(25)
         return payload
@@ -32,4 +34,4 @@ def event_handler(payload, context):
 
 
 if __name__ == "__main__":
-    print(event_handler({'action': 'live'}, {}))
+    print(event_handler({}, {'data': "eyJhY3Rpb24iOiAibGl2ZSJ9"}))
