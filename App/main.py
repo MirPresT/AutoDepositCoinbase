@@ -6,6 +6,8 @@ from storage import download_file
 
 def event_handler(payload, context):
 
+    print(payload)
+
     file_str = download_file(
         bucket_name='crypto-manager-keys',
         source_blob_name='coinbase_creds_encrypted.json',
@@ -23,6 +25,7 @@ def event_handler(payload, context):
     if payload['action'] == 'live':
         App = CoinbasePro(sandbox_mode=False, creds=credentials['live'])
         App.deposit(25)
+        return payload
     else:
         App = CoinbasePro(sandbox_mode=True, creds=credentials['sandbox'])
         return 'coinbase connected ok... no erros'
