@@ -5,7 +5,7 @@ from decrypt import decrypt_symmetric
 from storage import download_file
 
 
-def event_handler(event, context):
+def event_handler(pub_sub, context):
 
     file_str = download_file(
         bucket_name='crypto-manager-keys',
@@ -13,8 +13,8 @@ def event_handler(event, context):
         destination_file='encrypted_creds.json'
     )
 
-    decoded_data_str = base64.b64decode(context['data']).decode('utf-8')
-    data = json.loads(decoded_data_str)
+    decoded_data_str = base64.b64decode(pub_sub['data']).decode('utf-8')
+    payload = json.loads(decoded_data_str)
 
     credentials = decrypt_symmetric(**{
         'project_id': 'crypto-manager-235417',
@@ -24,7 +24,7 @@ def event_handler(event, context):
         'ciphertext': bytes(file_str)
     })
 
-    if data['action'] == 'live':
+    if payload['action'] == 'live':
         App = CoinbasePro(sandbox_mode=False, creds=credentials['live'])
         App.deposit(25)
         return payload
@@ -34,4 +34,4 @@ def event_handler(event, context):
 
 
 if __name__ == "__main__":
-    print(event_handler({}, {'data': "eyJhY3Rpb24iOiAibGl2ZSJ9"}))
+    print(event_handler({'data': "eyJhY3Rpb24iOiAibGl2ZSJ9"}, {}))
