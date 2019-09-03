@@ -26,7 +26,7 @@ def event_handler(pub_sub, context):
 
     if payload['action'] == 'live':
         App = CoinbasePro(sandbox_mode=False, creds=credentials['live'])
-        App.deposit(50)
+        App.deposit(55)
         return payload
     else:
         App = CoinbasePro(sandbox_mode=True, creds=credentials['sandbox'])
