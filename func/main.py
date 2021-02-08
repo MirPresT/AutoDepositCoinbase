@@ -32,8 +32,9 @@ def event_handler(event, context):
 
     payment_method_id = api.payment_methods(payment_method_name)['id']
 
-    return api.deposit(deposit_amount, payment_method_id=payment_method_id)
+    r = api.deposit(deposit_amount, payment_method_id=payment_method_id)
 
+    return r.json()
 
 if __name__ == "__main__":
     event_handler('', '')

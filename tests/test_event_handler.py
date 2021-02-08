@@ -1,5 +1,6 @@
 from func.main import event_handler
 import pytest
+import json
 
 
 @pytest.fixture
@@ -29,6 +30,6 @@ def fake_context():
 def test_event_handler(fake_event, fake_context):
 
     r = event_handler(fake_event, fake_context)
-    url = 'https://api-public.sandbox.pro.coinbase.com/deposits/payment-method'
-    assert r.url == url
-    assert r.status_code == 200
+
+    assert isinstance(r, dict)
+    assert json.dumps(r)
