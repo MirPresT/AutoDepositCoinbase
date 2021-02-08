@@ -29,6 +29,6 @@ def fake_context():
 def test_event_handler(fake_event, fake_context):
 
     r = event_handler(fake_event, fake_context)
-
-    assert r.url == 'https://api-public.sandbox.pro.coinbase.com/deposits/payment-method'
+    url = 'https://api-public.sandbox.pro.coinbase.com/deposits/payment-method'
+    assert r.url == url
     assert r.status_code == 200
