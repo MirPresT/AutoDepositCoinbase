@@ -1,7 +1,3 @@
-import sys
-
-print(sys.path)
-
 from func.main import event_handler
 import pytest
 
