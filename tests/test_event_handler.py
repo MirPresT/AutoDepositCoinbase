@@ -7,7 +7,7 @@ import json
 def fake_event():
     return {
         'sandbox_mode': True,
-        'deposit_amount': 325
+        'deposit_amount': 10
     }
 
 
