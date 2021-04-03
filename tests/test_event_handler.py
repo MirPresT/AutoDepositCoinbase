@@ -33,3 +33,5 @@ def test_event_handler(fake_event, fake_context):
 
     assert isinstance(r, dict)
     assert json.dumps(r)
+    assert r['status_code'] == 200
+    print(json.dumps(r, indent=4))
